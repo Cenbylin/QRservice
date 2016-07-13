@@ -35,7 +35,8 @@ public class SingleTask extends Thread {
 	 */
 	@Override
 	public void run() {
-		new CodeMaker(taskContentProvider).start();
+		CodeMaker codeMaker = new CodeMaker(taskContentProvider);
+		codeMaker.start();
 	}
 	
 }

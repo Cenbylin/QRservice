@@ -16,7 +16,7 @@ public class TaskContentProvider {
 	private int amount;
 	private String fileDir;
 	//配置
-	AbstractConfig cfg;
+	private AbstractConfig cfg;
 	
 	/**
 	 * 传入内容，构造任务提供者
@@ -25,6 +25,7 @@ public class TaskContentProvider {
 	public TaskContentProvider(List<String> contents, AbstractConfig cfg){
 		this.contents = contents;
 		amount = contents.size();
+		this.cfg = cfg;
 		//初始化创建目录
 		String fileDir = cfg.getDirLocation() + File.separatorChar + System.currentTimeMillis();
 		try {
@@ -52,6 +53,7 @@ public class TaskContentProvider {
 		if(index>=amount){
 			return null;
 		}
+		System.err.println(index);
 		return new TaskContent(index, contents.get(index));
 	}
 	
@@ -70,5 +72,21 @@ public class TaskContentProvider {
 	 */
 	public String getDir(){
 		return fileDir;
+	}
+	
+	/**
+	 * 工具，获得宽度
+	 * @return
+	 */
+	public int getWidth(){
+		return cfg.getWidth();
+	}
+	
+	/**
+	 * 工具，获得高度
+	 * @return
+	 */
+	public int getHeight(){
+		return cfg.getHeight();
 	}
 }

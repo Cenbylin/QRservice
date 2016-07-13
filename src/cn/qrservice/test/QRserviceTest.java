@@ -2,11 +2,17 @@ package cn.qrservice.test;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
 
+import cn.qrservice.codefactory.support.QRExecutor;
+import cn.qrservice.codefactory.support.TaskCallBack;
+import cn.qrservice.common.configuration.AbstractConfig;
+import cn.qrservice.common.configuration.MapQRserviceConfig;
 import cn.qrservice.common.utils.imagewriter.MatrixToImageWriter;
 
 import com.google.zxing.BarcodeFormat;
@@ -52,9 +58,26 @@ public class QRserviceTest {
 	public void getFlieName(){
 		System.out.println("lalala{0}".replace("{0}", String.valueOf(1)));
 	}
-	@Test
+	
 	public void getFileDe(){
 		System.out.println(java.io.File.separatorChar);
 	}
 	
+	public static void main(String[] args) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("dirLocation", "D:\\qrimg");
+		map.put("fileNameFormat", "{0}");
+		map.put("width", 40);
+		map.put("height", 40);
+		AbstractConfig cfg = new MapQRserviceConfig(map);
+		List<String> content = new ArrayList<String>();
+		for (int i = 0; i < 100; i++) {
+			content.add(i+"");
+		}
+		QRExecutor.execute(cfg, content, new TaskCallBack() {});
+	}
+	@Test
+	public void mainTest(){
+		
+	}
 }
