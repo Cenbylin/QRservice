@@ -1,5 +1,6 @@
 package cn.qrservice.test;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import org.junit.Test;
 import cn.qrservice.codefactory.support.QRExecutor;
 import cn.qrservice.codefactory.support.TaskCallBack;
 import cn.qrservice.common.configuration.AbstractConfig;
-import cn.qrservice.common.configuration.MapQRserviceConfig;
+import cn.qrservice.common.configuration.ClassPathXMLQRserviceConfig;
 import cn.qrservice.common.utils.imagewriter.MatrixToImageWriter;
 
 import com.google.zxing.BarcodeFormat;
@@ -64,17 +65,28 @@ public class QRserviceTest {
 	}
 	
 	public static void main(String[] args) {
+		/*
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("dirLocation", "D:\\qrimg");
-		map.put("fileNameFormat", "{0}");
-		map.put("width", 40);
-		map.put("height", 40);
-		AbstractConfig cfg = new MapQRserviceConfig(map);
+		map.put("fileNameFormat", "{0}、测试");
+		map.put("width", 140);
+		map.put("height", 140);
+		*/
+		AbstractConfig cfg = null;
+		try {
+			cfg = new ClassPathXMLQRserviceConfig("qrconfig.xml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		List<String> content = new ArrayList<String>();
 		for (int i = 0; i < 100; i++) {
 			content.add(i+"");
 		}
-		QRExecutor.execute(cfg, content, new TaskCallBack() {});
+		QRExecutor.execute(cfg, content, new TaskCallBack() {
+			@Override
+			public void taskFinish(String foldName, List<Integer> indexs) {
+				System.out.println(foldName);
+			}});
 	}
 	@Test
 	public void mainTest(){

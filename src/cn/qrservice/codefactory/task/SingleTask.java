@@ -27,7 +27,7 @@ public class SingleTask extends Thread {
 		this.contents = contents;
 		this.callBack = callBack;
 		//初始化动作
-		taskContentProvider = new TaskContentProvider(contents, cfg);
+		taskContentProvider = new TaskContentProvider(contents, cfg, callBack);
 	}
 
 	/**
@@ -36,7 +36,9 @@ public class SingleTask extends Thread {
 	@Override
 	public void run() {
 		CodeMaker codeMaker = new CodeMaker(taskContentProvider);
-		codeMaker.start();
+		codeMaker.run();
+		//new CodeMaker(taskContentProvider).start();
+		//new CodeMaker(taskContentProvider).start();
 	}
 	
 }

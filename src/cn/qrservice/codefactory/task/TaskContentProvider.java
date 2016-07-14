@@ -3,6 +3,7 @@ package cn.qrservice.codefactory.task;
 import java.io.File;
 import java.util.List;
 
+import cn.qrservice.codefactory.support.TaskCallBack;
 import cn.qrservice.common.configuration.AbstractConfig;
 
 /**
@@ -14,7 +15,8 @@ public class TaskContentProvider {
 	private List<String> contents;
 	private int currentNum;
 	private int amount;
-	private String fileDir;
+	private String foldName;
+	private TaskCallBack callBack;
 	//配置
 	private AbstractConfig cfg;
 	
@@ -22,20 +24,21 @@ public class TaskContentProvider {
 	 * 传入内容，构造任务提供者
 	 * @param contents
 	 */
-	public TaskContentProvider(List<String> contents, AbstractConfig cfg){
+	public TaskContentProvider(List<String> contents, AbstractConfig cfg, TaskCallBack callBack){
+		this.callBack = callBack;
 		this.contents = contents;
 		amount = contents.size();
 		this.cfg = cfg;
 		//初始化创建目录
-		String fileDir = cfg.getDirLocation() + File.separatorChar + System.currentTimeMillis();
+		String foldName = cfg.getDirLocation() + File.separatorChar + System.currentTimeMillis();
 		try {
-			if (!(new File(fileDir).isDirectory())) {
-			    new File(fileDir).mkdirs();
+			if (!(new File(foldName).isDirectory())) {
+			    new File(foldName).mkdirs();
 			}
 		} catch (Exception e) {
 			
 		}
-		this.fileDir = fileDir;
+		this.foldName = foldName;
 		
 	}
 	
@@ -51,9 +54,10 @@ public class TaskContentProvider {
 		}
 		//判断是否超过上限
 		if(index>=amount){
+			//回调
+			callBack.taskFinish(foldName, null);
 			return null;
 		}
-		System.err.println(index);
 		return new TaskContent(index, contents.get(index));
 	}
 	
@@ -63,15 +67,15 @@ public class TaskContentProvider {
 	 * @return
 	 */
 	public String getFileName(int index){
-		return cfg.getFileNameFormat().replace("{0}", String.valueOf(index))+".jpg";
+		return cfg.getFileNameFormat().replace("{0}", String.valueOf(index+1))+".jpg";
 	}
 	
 	/**
 	 * 工具，获得目标目录
 	 * @return
 	 */
-	public String getDir(){
-		return fileDir;
+	public String getFoldName(){
+		return foldName;
 	}
 	
 	/**

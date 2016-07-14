@@ -2,6 +2,8 @@ package cn.qrservice.common.configuration;
 
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 /**
  * 从用户自组装map来创建多任务配置
  * @author Cenby7
@@ -16,16 +18,20 @@ public class MapQRserviceConfig implements AbstractConfig{
 	private Integer width=40;
 	//生产高度 
 	private Integer height=40;
+	//日志
+	Logger logger = Logger.getLogger(this.getClass());//日志
 	
 	/**
 	 * 传入配置map方式
 	 * @param cfg
 	 */
 	public MapQRserviceConfig(Map<String, Object> cfg) {
+		logger.info("Creating configuration with map" + cfg);
 		//先处理
 		
 		//加载配置
 		loadConfig(cfg);
+		logger.info("Successfully loaded QRconfig.");
 	}
 	
 	/**

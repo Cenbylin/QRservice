@@ -1,0 +1,9 @@
+<xml>
+	<QRservice>
+		<dirLocation>D:\\qrimg</dirLocation>
+		<fileNameFormat>{0}嗨</fileNameFormat>
+		<width>200</width>
+		<height>200</height>
+	
+	</QRservice>
+</xml>

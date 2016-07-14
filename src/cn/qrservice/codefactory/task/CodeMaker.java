@@ -25,7 +25,7 @@ public class CodeMaker extends Thread {
 		while((taskContent = taskContentProvider.getContent())!=null){
 			try {
 				QRcreator.createCode(taskContent.getContent(), 
-						taskContentProvider.getDir(), 
+						taskContentProvider.getFoldName(), 
 						taskContentProvider.getFileName(taskContent.getIndex()), 
 						taskContentProvider.getWidth(), 
 						taskContentProvider.getHeight());
